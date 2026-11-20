@@ -47,7 +47,6 @@
                                   focus:outline-none focus:ring-2 focus:border-transparent
                                   font-mono tracking-wider @error('nim') border-red-400 @enderror"
                            placeholder="Masukkan NIM kamu">
-                   
                 </div>
 
                 {{-- Password --}}
