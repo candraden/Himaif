@@ -45,7 +45,6 @@
         <form method="POST" action="{{ route('mahasiswa.profil.foto') }}" enctype="multipart/form-data"
               class="space-y-4">
             @csrf
-            @method('POST')
 
             {{-- Preview foto --}}
             <div class="flex items-center gap-4">
@@ -66,7 +65,7 @@
                         Pilih Foto
                     </label>
                     <input type="file" id="foto" name="foto" accept="image/jpeg,image/png,image/webp"
-                           class="sr-only" onchange="previewFoto(this)">
+                           class="sr-only">
                     <p class="mt-1 text-xs text-stone-400">JPG, PNG, WebP · maks. 2 MB</p>
                 </div>
             </div>
@@ -134,21 +133,24 @@
     </div>
 
 </div>
-@endsection
 
-@push('scripts')
 <script>
-function previewFoto(input) {
-    if (!input.files || !input.files[0]) return;
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const img = document.getElementById('preview-img');
-        const placeholder = document.getElementById('preview-placeholder');
-        img.src = e.target.result;
+(function () {
+    var input = document.getElementById('foto');
+    if (!input) return;
+
+    input.addEventListener('change', function () {
+        var file = input.files && input.files[0];
+        if (!file) return;
+
+        var img = document.getElementById('preview-img');
+        var placeholder = document.getElementById('preview-placeholder');
+        if (!img) return;
+
+        img.src = URL.createObjectURL(file);
         img.classList.remove('hidden');
         if (placeholder) placeholder.classList.add('hidden');
-    };
-    reader.readAsDataURL(input.files[0]);
-}
+    });
+})();
 </script>
-@endpush
+@endsection
